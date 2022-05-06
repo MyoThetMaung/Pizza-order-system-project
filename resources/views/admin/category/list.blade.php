@@ -22,7 +22,7 @@
                     </div>
                 @endif
                 <div class="card-tools">
-                    <form action="{{ route('admin#searchCategory') }}" method="POST">
+                    <form action="{{ route('admin#searchCategory') }}" method="GET">
                         @csrf
                         <div class="input-group input-group-sm" style="width: 150px;">
                             <input type="text" name="search" class="form-control float-right" placeholder="Search">

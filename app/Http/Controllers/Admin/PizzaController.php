@@ -86,21 +86,18 @@ class PizzaController extends Controller
             'description' => 'required',
         ]);
         $updateData = $this->updatePizzaData($request);
-        if(isset($updateData['image'])){
-            $data = Pizza::select('image')->where('id',$id)->first();
+        if (isset($updateData['image'])) {
+            $data = Pizza::select('image')->where('id', $id)->first();
             $imageName = $data['image'];
             File::delete(public_path().'/uploads/'.$imageName);
 
             $file = $request->file('image');
             $fileName = uniqid().'_'.$file->getClientOriginalName();
-            $file->move(public_path().'/uploads/',$fileName);
+            $file->move(public_path().'/uploads/', $fileName);
             $updatePizzaData['image'] = $fileName;
-            Pizza::where('id',$id)->update($updateData);
-            return redirect()->route('admin#pizza')->with('success', 'Pizza updated successfully'); 
-        }else{
-            Pizza::where('id',$id)->update($updateData);
-            return redirect()->route('admin#pizza')->with('success', 'Pizza updated successfully'); 
         }
+        Pizza::where('id',$id)->update($updateData);
+        return redirect()->route('admin#pizza')->with('success', 'Pizza updated successfully');
     }
 
     public function seemorePizza($id){
