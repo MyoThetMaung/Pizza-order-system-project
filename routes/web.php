@@ -3,9 +3,12 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
-use App\Http\Controllers\Admin\PizzaController;
-use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\PizzaController;
+use App\Http\Controllers\User\CustomerController;
+use App\Http\Controllers\Admin\CategoryController;
+
 
 
 Route::get('/', function () {
@@ -19,7 +22,7 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified'
             if(Auth::user()->role == 'admin'){
                 return redirect()->route('admin#profile');
             }else{
-                return redirect()->route('admin#userList');
+                return redirect()->route('user#index');
             }
         }
     });
@@ -33,6 +36,7 @@ Route::group(['prefix'=>'admin', 'namespace'=>'Admin'], function(){
     Route::post('/changePassword/{id}', [AdminController::class, 'changePassword'])->name('admin#changePassword');
 
     Route::get('/category', [CategoryController::class, 'category'])->name('admin#category');
+    Route::get('/categoryItem/{id}', [CategoryController::class, 'categoryItem'])->name('admin#categoryItem');
     Route::get('/addCategory', [CategoryController::class, 'addCategory'])->name('admin#addCategory');
     Route::post('/createCategory', [CategoryController::class, 'createCategory'])->name('admin#createCategory');
 
@@ -58,6 +62,7 @@ Route::group(['prefix'=>'admin', 'namespace'=>'Admin'], function(){
     Route::get('/adminListSearch', [UserController::class, 'adminListSearch'])->name('admin#adminListSearch');
 });
 
-// Route::group(['prefix'=>'user','namespace'=>'User'], function(){
-//     Route::get('/', [UserController::class, 'index'])->name('user#index');
-// });
+Route::group(['prefix'=>'user','namespace'=>'User'], function(){
+    Route::get('/', [CustomerController::class, 'index'])->name('user#index');
+    Route::post('/contactCreate', [ContactController::class, 'contactCreate'])->name('user#contactCreate');
+});

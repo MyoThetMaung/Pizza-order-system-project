@@ -8,7 +8,6 @@
       <div class="container-fluid">
         <div class="row mt-4">
           <div class="col-12">
-              <a href="{{ route('admin#addPizza') }}" class="btn btn-primary m-2">Add</a>
               @if(session('success'))
                     <div class="alert alert-success alert-dismissible fade show" role="alert">
                         <strong></strong> {{session('success')}}
@@ -17,11 +16,12 @@
                         </button>
                     </div>
                 @endif
-            <div class="card">
+            <div class="card mt-3">
               <div class="card-header">
-                <h3 class="card-title">Pizza Table</h3>
+                <a href="{{ route('admin#addPizza') }}" class="btn btn-sm btn-outline-dark my-2">Add</a>
+                <span class="ml-5"><button class="btn btn-sm btn-primary">Total categories => {{$pizzas->total()}}</button></span>
 
-                <div class="card-tools">
+                <div class="card-tools my-2">
                     <form action="{{ route('admin#pizza') }}" method="POST">
                         @csrf
                         <div class="input-group input-group-sm" style="width: 150px;">
@@ -73,7 +73,7 @@
                         </tr>
                         @endforeach
                         @endif
-                    
+
                   </tbody>
                 </table>
                 <div class="float-end m-2">{{$pizzas->links()}}</div>

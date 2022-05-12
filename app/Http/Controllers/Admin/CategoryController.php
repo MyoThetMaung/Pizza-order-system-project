@@ -4,16 +4,22 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\User;
 use App\Models\Category;
+use App\Models\Pizza;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class CategoryController extends Controller
 {
 
     public function category()
     {
-        $categories = Category::paginate(2);
+        $categories = Category::select('categories.id','categories.name',DB::raw('COUNT(pizzas.category_id) as count'))
+                        ->join('pizzas', 'pizzas.category_id','categories.id')
+                        ->groupBy('categories.name','categories.id')
+                        ->paginate(2);
+                        // dd($categories->toarray());
         return view('admin.category.list',compact('categories'));
     }
 
@@ -21,6 +27,15 @@ class CategoryController extends Controller
     {
         $user = User::where('id',Auth::user()->id)->first();
         return view('admin.category.addCategory',compact('user'));
+    }
+
+    public function categoryItem($id)
+    {
+        $pizzas = Pizza::select('pizzas.*', 'categories.name as category_name')
+                        ->join('categories', 'categories.id','pizzas.category_id')
+                        ->where('categories.id',$id)
+                        ->paginate(2);
+        return view('admin.category.item',compact('pizzas'));
     }
 
     public function createCategory(Request $request)

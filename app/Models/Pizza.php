@@ -10,5 +10,5 @@ class Pizza extends Model
 {
     use HasFactory;
     protected $fillable = ['category_id', 'name', 'image', 'price', 'discount_price', 'publish_status', 'buy_one_get_one_status', 'waiting_time', 'description'];
-  
+
 }

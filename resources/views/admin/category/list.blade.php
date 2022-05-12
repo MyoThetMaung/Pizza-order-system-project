@@ -13,6 +13,7 @@
                 <h3 class="card-title">
                   <a href="{{ route('admin#addCategory') }}"><button class="btn btn-sm btn-outline-dark">Add Category</button></a>
                 </h3>
+                <span class="ml-5"><button class="btn btn-sm btn-primary">Total categories => {{$categories->total()}}</button></span>
                 @if(session('success'))
                     <div class="alert alert-success alert-dismissible fade show" role="alert">
                         <strong></strong> {{session('success')}}
@@ -51,7 +52,13 @@
                         <tr>
                             <td>{{$category->id}}</td>
                             <td>{{$category->name}}</td>
-                            <td>1</td>
+                            <td>
+                                @if($category->count == 0)
+                                    <a class="badge badge-danger text-decoration-none" >{{$category->count}}</a>
+                                @else
+                                    <a class="badge badge-success text-decoration-none" href="{{route('admin#categoryItem',$category->id)}}">{{$category->count}}</a>
+                                @endif
+                            </td>
                             <td>
                                 <div class="d-flex">
                                     <form action="/admin/deleteCategory/{{$category->id}}" method="POST">

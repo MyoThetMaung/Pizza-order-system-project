@@ -12,7 +12,7 @@
                 <div class="card-header p-2">
                   <legend class="text-center">Add Pizza</legend>
                 </div>
-                
+
                 <div class="card-body">
                   <div class="tab-content">
                     <div class="active tab-pane" id="activity">
@@ -21,7 +21,7 @@
                         <div class="form-group row">
                             <label for="inputName" class="col-sm-2 col-form-label">Name</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" id="inputName" placeholder="Category Name" name="name" >
+                                <input type="text" class="form-control" id="inputName" placeholder="Pizza Name" name="name" >
                                 @error('name')
                                     <div class="alert alert-danger p-1 mt-1">
                                         {{ $message }}
