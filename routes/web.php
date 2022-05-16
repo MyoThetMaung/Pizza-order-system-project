@@ -3,11 +3,12 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
-use App\Http\Controllers\ContactController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\PizzaController;
+use App\Http\Controllers\User\ContactController;
 use App\Http\Controllers\User\CustomerController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\AdminContactController;
 
 
 
@@ -60,9 +61,16 @@ Route::group(['prefix'=>'admin', 'namespace'=>'Admin'], function(){
     Route::get('/adminList', [UserController::class, 'adminList'])->name('admin#adminList');
     Route::get('/adminListDelete/{id}', [UserController::class, 'adminListDelete'])->name('admin#adminListDelete');
     Route::get('/adminListSearch', [UserController::class, 'adminListSearch'])->name('admin#adminListSearch');
+
+    Route::get('/contactList', [AdminContactController::class, 'contactList'])->name('admin#contactList');
+    Route::get('/contactSearch', [AdminContactController::class, 'contactSearch'])->name('admin#contactSearch');
 });
 
 Route::group(['prefix'=>'user','namespace'=>'User'], function(){
     Route::get('/', [CustomerController::class, 'index'])->name('user#index');
     Route::post('/contactCreate', [ContactController::class, 'contactCreate'])->name('user#contactCreate');
+    Route::get('/pizzaDetail/{id}', [CustomerController::class, 'pizzaDetail'])->name('user#pizzaDetail');
+    Route::get('/categorySearch/{id}', [CustomerController::class, 'categorySearch'])->name('user#categorySearch');
+    Route::get('/searchPizza', [CustomerController::class, 'searchPizza'])->name('user#searchPizza');
+    Route::get('/searchDatePrice', [CustomerController::class, 'searchDatePrice'])->name('user#searchDatePrice');
 });

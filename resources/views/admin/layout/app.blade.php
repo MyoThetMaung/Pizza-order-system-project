@@ -75,10 +75,10 @@
           </li>
 
           <li class="nav-item">
-            <a href="carrier.html" class="nav-link">
+            <a href="{{ route('admin#contactList') }}" class="nav-link">
               <i class="fas fa-biking"></i>
               <p>
-                Carrier
+                Contact
               </p>
             </a>
           </li>

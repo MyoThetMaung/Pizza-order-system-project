@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\User;
+use App\Models\Contact;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -32,14 +33,14 @@ class UserController extends Controller
         $key = $request->search;
         $users = User::where('role', $role)
                         ->where(function ($query) use ($key) {
-                            $query  ->orwhere('name','like','%'.$key.'%') 
+                            $query  ->orwhere('name','like','%'.$key.'%')
                                     ->orwhere('email','like','%'.$key.'%')
                                     ->orwhere('phone','like','%'.$key.'%')
-                                    ->orwhere('address','like','%'.$key.'%');    
-                        })->paginate(2);   
-        $users->appends($request->all()); 
-        return $users;  
-    }   
+                                    ->orwhere('address','like','%'.$key.'%');
+                        })->paginate(2);
+        $users->appends($request->all());
+        return $users;
+    }
 
     public function userListDelete($id){
         $user = User::find($id);
@@ -52,4 +53,6 @@ class UserController extends Controller
         $user->delete();
         return redirect()->route('admin#adminList')->with('success','Admin deleted successfully');
     }
+
+
 }
