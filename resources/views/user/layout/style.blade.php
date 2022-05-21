@@ -12,9 +12,9 @@
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="{{asset('customer/css/styles.css')}}" rel="stylesheet" />
     <link href="{{asset('customer/css/custom.css')}}" rel="stylesheet" />
-    <style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.15.4/js/all.js" integrity="sha384-rOA1PnstxnOBLzCLMcre8ybwbTmemjzdNlILg8O7z1lUkLXozs4DHonlDtnE7fpc" crossorigin="anonymous"></script>
 
-    </style>
 </head>
 
 <body>
@@ -47,6 +47,6 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Core theme JS-->
     <script src="{{asset('customer/js/scripts.js')}}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </body>
-
 </html>

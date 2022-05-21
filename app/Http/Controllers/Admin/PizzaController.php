@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 
 
@@ -16,7 +17,10 @@ class PizzaController extends Controller
 
     public function pizza()
     {
-        $pizzas = Pizza::paginate(2);
+        if(Session::has('PIZZA_SEARCH')){
+            Session::forget('PIZZA_SEARCH');
+        }
+        $pizzas = Pizza::paginate(3);
         if(count($pizzas) == 0){
             $emptyStatus = 0;
         }else{
@@ -105,18 +109,6 @@ class PizzaController extends Controller
         return view('admin.pizza.seemorePizza',compact('pizza'));
     }
 
-    public function searchPizza(Request $request){
-        $search_key  = $request->search;
-        $pizzas = Pizza::orwhere('name','like','%'.$search_key.'%')
-                        ->orWhere('price','like','%'.$search_key.'%')
-                        ->paginate(2);
-        if (count($pizzas) == 0) {
-            $emptyStatus = 0;
-        }else{
-            $emptyStatus = 1;
-        }
-        return view('admin.pizza.list',compact('pizzas',['emptyStatus']));
-    }
 
     public function pizzaData($request,$fileName){
         return
@@ -151,4 +143,53 @@ class PizzaController extends Controller
         return $arr;
     }
 
+    public function searchPizza(Request $request){
+        $search_key  = $request->search;
+        $pizzas = Pizza::orwhere('name','like','%'.$search_key.'%')
+                        ->orWhere('price','like','%'.$search_key.'%')
+                        ->paginate(2);
+        if (count($pizzas) == 0) {
+            $emptyStatus = 0;
+        }else{
+            $emptyStatus = 1;
+        }
+        Session::put('PIZZA_SEARCH',$search_key);
+        return view('admin.pizza.list',compact('pizzas',['emptyStatus']));
+    }
+
+    public function downloadPizza(){
+        if (Session::has('PIZZA_SEARCH')) {
+            $search = Session::get('PIZZA_SEARCH');
+            $pizzas = Pizza::orwhere('name','like','%'.$search.'%')
+                        ->orWhere('price','like','%'.$search.'%')
+                        ->get();
+        }else{
+            $pizzas = Pizza::get();
+        }
+        $csvExporter = new \Laracsv\Export();
+        $csvExporter->build($pizzas, [
+            'id' => 'ID',
+            'name' => 'Pizza Name',
+            'price' => 'Pizza Price',
+            'publish_status' => 'Publish Status',
+            'buy_one_get_one_status' => 'Buy 1 Get 1',
+            'created_at' => 'Created At',
+            'updated_at' => 'Updated At',
+        ]);
+
+        $csvReader = $csvExporter->getReader();
+        $csvReader->setOutputBOM(\League\Csv\Reader::BOM_UTF8);
+        $filename = 'PizzaList.csv';
+        return response((string) $csvReader)
+                ->header('Content-Type', 'text/csv; charset=UTF-8')
+                ->header('Content-Disposition', 'attachment; filename="'.$filename.'"');
+    }
+
+    // $pizzas = Pizza::paginate(2);
+    //     if(count($pizzas) == 0){
+    //         $emptyStatus = 0;
+    //     }else{
+    //         $emptyStatus = 1;
+    //     }
+    //     return view('admin.pizza.list',compact('pizzas',['emptyStatus']));
 }

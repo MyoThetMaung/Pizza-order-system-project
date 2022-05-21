@@ -2,6 +2,8 @@
 @extends('user.layout.style')
 
 @section('content')
+
+
     <!-- Page Content-->
     <div class="container px-4 px-lg-5" id="home">
         <!-- Heading Row-->
@@ -103,7 +105,7 @@
             @endif
             <h3>Contact Us</h3>
 
-            <form action="{{ route('user#contactCreate') }}" method="POST" class="my-4">
+            <form action="{{ route('user#contactCreate') }}"  method="POST" class="my-4">
                 @csrf
                 @error('name')
                 <div class="alert alert-danger p-1">
@@ -123,9 +125,9 @@
                 </div>
                 @enderror
                 <textarea class="form-control my-1" name="message" rows="3" placeholder="Message">{{old('message')}}</textarea>
-                <button type="submit" class="btn btn-outline-dark">Send  <i class="fas fa-arrow-right"></i></button>
+                <button type="submit" class="btn btn-outline-dark">Send</button>
             </form>
         </div>
     </div>
-
 @endsection
+

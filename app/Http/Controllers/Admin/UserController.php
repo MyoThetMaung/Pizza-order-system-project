@@ -54,5 +54,22 @@ class UserController extends Controller
         return redirect()->route('admin#adminList')->with('success','Admin deleted successfully');
     }
 
+    public function adminListEdit($id){
+        $users = User::all();
+        $user = User::find($id);
+        return view('admin.users.adminEdit',compact('user','users'));
+    }
+
+    public function adminListUpdate(Request $request,$id){
+        $user = User::find($id);
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->phone = $request->phone;
+        $user->address = $request->address;
+        $user->role = $request->role;
+        $user->save();
+        return redirect()->route('admin#adminList')->with('success','Admin updated successfully');
+    }
+
 
 }

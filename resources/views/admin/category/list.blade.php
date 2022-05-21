@@ -22,6 +22,7 @@
                         </button>
                     </div>
                 @endif
+                <a href="{{ route('admin#downloadCategory') }}" class="btn btn-sm btn-success">Download CSV</a>
                 <div class="card-tools">
                     <form action="{{ route('admin#searchCategory') }}" method="GET">
                         @csrf

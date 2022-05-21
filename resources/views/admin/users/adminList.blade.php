@@ -61,6 +61,9 @@
                                 <a href="{{route('admin#adminListDelete',$user->id)}}">
                                     <button class="btn btn-sm bg-danger text-white" type="submit"><i class="fas fa-trash-alt"></i></button>
                                 </a>
+                                <a href="{{route('admin#adminListEdit',$user->id)}}">
+                                    <button class="btn btn-sm bg-warning text-white" type="submit"><i class="fas fa-edit"></i></button>
+                                </a>
                             </td>
                         </tr>
                     @endforeach

@@ -21,6 +21,7 @@
                 <a href="{{ route('admin#addPizza') }}" class="btn btn-sm btn-outline-dark my-2">Add</a>
                 <span class="ml-5"><button class="btn btn-sm btn-primary">Total categories => {{$pizzas->total()}}</button></span>
 
+                <a href="{{ route('admin#downloadPizza') }}" class="btn btn-sm btn-success">Download CSV</a>
                 <div class="card-tools my-2">
                     <form action="{{ route('admin#pizza') }}" method="POST">
                         @csrf
